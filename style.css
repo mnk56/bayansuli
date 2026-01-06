@@ -153,26 +153,25 @@ h2 {
 
 .content-box {
     position: absolute;
+    /* Төвд байрлуулах */
+    top: 55%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
     z-index: 10;
     color: rgb(255, 255, 255);
     background: rgba(0, 0, 0, 0.4); /* Бага зэрэг бараан болгож тодруулав */
     
-    /* Төвд нь байрлуулах шилдэг арга */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
-    /* Padding-ийг багасгах */
-    padding: 2rem 4rem; 
+    /* Padding-ийг хэт их биш, тохиромжтой болгох */
+    padding: 30px 50px; 
     text-align: center;
     
-    /* Хүрээнээс халихаас сэргийлэх */
+    /* Хүрээний хэмжээг хязгаарлах */
     width: 90%;
-    max-width: 800px;
+    max-width: 700px;
     box-sizing: border-box;
-    border-radius: 8px; /* Буланг нь бага зэрэг бөөрөнхийлөх */
+    border-radius: 12px;
 }
-
 /* ======================================= */
 /* 4. PRICE SECTIONS                 */
 /* ======================================= */
@@ -321,6 +320,7 @@ footer {
     }
 
 }
+
 
 
 
