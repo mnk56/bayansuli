@@ -81,8 +81,8 @@ h2 {
     padding: 0px;
     
     display: flex;
-    justify-content: center;
-    gap: 40px; /* Reduced gap slightly */
+    justify-content: flex-end;;
+    gap: 20px; /* Reduced gap slightly */
 }
 
 .main-nav a {
@@ -93,6 +93,7 @@ h2 {
     padding: 5px 0;
     
     transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
 .main-nav a:hover {
@@ -320,6 +321,7 @@ footer {
     }
 
 }
+
 
 
 
