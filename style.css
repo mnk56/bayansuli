@@ -77,8 +77,8 @@ h2 {
 
 .main-nav ul {
     list-style: none;
-    margin: 1000px;
-    padding: 100px;
+    margin: 0px;
+    padding: 0px;
     
     display: flex;
     justify-content: center;
@@ -321,6 +321,7 @@ footer {
     }
 
 }
+
 
 
 
