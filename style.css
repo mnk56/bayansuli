@@ -73,12 +73,10 @@ h2 {
 
 .main-nav ul {
     list-style: none;
-    margin: 0; /* 1000px-ийг заавал 0 болгоно */
-    padding: 0; 
-    
+    margin: 0; /* 1000px-ийг 0 болгоно */
+    padding: 0;
     display: flex;
-    justify-content: flex-end; /* Текстийг баруун талд нь байрлуулна */
-    gap: 30px; /* Хоорондын зай */
+    gap: 20px; /* Текст хоорондын зайг бага зэрэг багасгав */
 }
 
 .main-nav a {
@@ -146,21 +144,21 @@ h2 {
 
 .content-box {
     position: absolute;
-  
+   
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     
-    z-index: 10;
-    color: #ffffff;
-    background: rgba(0, 0, 0, 0.4); 
-    
-    padding: 40px;
+    background: rgba(0, 0, 0, 0.5); /* Саарал дэвсгэр */
+    color: white;
+    padding: 2rem; /* 10rem-ийг 2rem болгож багасгав */
     text-align: center;
-    width: 90%; 
-    max-width: 700px; 
-    box-sizing: border-box;
-    border-radius: 10px;
+    
+    width: 90%; /* Жижиг дэлгэц дээр халихгүй */
+    max-width: 600px; /* Том дэлгэц дээр хэтэрхий сунахгүй */
+    box-sizing: border-box; /* Padding-ийг өргөн дотор нь багтаана */
+    border-radius: 8px;
+    z-index: 10;
 }
 
 /* ======================================= */
@@ -311,6 +309,7 @@ footer {
     }
 
 }
+
 
 
 
