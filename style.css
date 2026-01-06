@@ -1,0 +1,310 @@
+@charset "UTF-8";
+
+/* ======================================= */
+/* 0. BASE STYLING & UTILITIES            */
+/* ======================================= */
+:root {
+    --primary-green: #4ab736; /* Dark Green */
+    --secondary-green: #74ff4d; /* Light Green/Accent */
+    --text-dark: #333;
+    --text-light: #ffffff;
+    --max-width: 1200px;
+}
+
+/* Apply padding to the body to prevent content hiding under the fixed header */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    margin: 0 0;
+    padding-top: 60px; /* Space for the fixed header */
+    background-color: #f9f9f9;
+}
+
+/* Section container padding/centering */
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    /* Removed: border: 4px solid #60BA48; (Often distracting, but keep if intended) */
+}
+
+h2 {
+    font-size: 2.5rem;
+    color: var(--primary-green);
+    margin-bottom: 40px;
+    display: inline-block;
+    border-bottom: 3px solid var(--secondary-green);
+    padding-bottom: 5px;
+}
+
+
+/* ======================================= */
+/* 1. HEADER STYLING              */
+/* ======================================= */
+
+.main-header {
+    /* Critical for fixing the header */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    
+    background-image: linear-gradient(to bottom, var(--primary-green), #4e8b3b);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    padding: 10px 50px;
+    height: 60px; /* Ensure a consistent height */
+}
+
+.main-header .logo-container img {
+    height: 60px;
+
+
+}
+
+/* ======================================= */
+/* 2. NAVIGATION STYLING            */
+/* ======================================= */
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    display: flex;
+    gap: 40px; /* Reduced gap slightly */
+}
+
+.main-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 5px 0;
+    
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: var(--secondary-green);
+}
+
+/* ======================================= */
+/* 3. PARALLAX SECTION               */
+/* ======================================= */
+
+.parallax-section {
+    position: relative;
+    height: 80vh;
+    width: 100%;
+    overflow: hidden; /* Илүү гарсан зургийг нууна */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+}
+
+.moving-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    will-change: transform;
+}
+
+/* 1-р зураг */
+.layer-1 {
+    background-image: url('image.png');
+    animation: slide 20s linear infinite;
+}
+
+/* 2-р зураг */
+.layer-2 {
+    background-image: url('texture.png');
+    /* Энэ зураг эхлэхдээ 100% баруун талд байрлана */
+    animation: slide2 20s linear infinite;
+}
+
+/* 1-р зургийн хөдөлгөөн: Төвөөс зүүн тийш */
+@keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+/* 2-р зургийн хөдөлгөөн: Баруунаас төв рүү */
+@keyframes slide2 {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(0); }
+}
+
+.content-box {
+    position: absolute;
+    z-index: 10;
+    /* Текстээ харагдуулахын тулд загвар нэмж болно */
+    color: rgb(255, 255, 255);
+    background: rgba(0,0,0,0.3);
+    padding: 10rem;
+    text-align: center;
+    top: 20%;
+}
+
+/* ======================================= */
+/* 4. PRICE SECTIONS                 */
+/* ======================================= */
+
+.priceSec {
+    background-color: #f0f0f0;
+}
+/* Use the .Price container (if you keep it) or target .priceSec h2 directly */
+.Price {
+    background-color: #f0f0f0; /* Inherited from .priceSec, can be removed */
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0; /* Adjusted padding as section handles it */
+}
+
+/* Container for the entire price board */
+.price-board {
+    display: flex; 
+    justify-content: center; 
+    gap: 40px; /* Reduced gap slightly */
+    padding: 40px;
+    background-color: #fff; /* Changed to white for better contrast */
+    border-radius: 10px;
+    max-width: 900px;
+    margin: 20px auto 0;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Individual square for each fuel type */
+.fuel-item {
+    width: 140px;
+    height: 140px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    color: var(--text-dark); 
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    transition: transform 0.3s;
+}
+
+.fuel-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Fuel type title styling */
+.fuel-item h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--primary-green);
+}
+
+/* Price styling */
+.fuel-item p {
+    font-size: 2.3rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--secondary-green);
+}
+
+/* ======================================= */
+/* 5. FOOTER & CONTACT STYLING            */
+/* ======================================= */
+
+.contactSec {
+    background-color: #fff;
+}
+
+.contactSec ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.contactSec li {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: var(--primary-green);
+    color: var(--text-light);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9em;
+}
+
+/* ======================================= */
+/* 6. RESPONSIVE DESIGN (Mobile First)    */
+/* ======================================= */
+
+@media (max-width: 768px) {
+    .main-header {
+        padding: 10px 20px;
+        flex-direction: column;
+        height: auto; /* Allow header height to adjust */
+    }
+
+    .main-header .logo-container {
+        margin-bottom: 10px;
+    }
+
+    .main-nav ul {
+        gap: 15px;
+        padding-bottom: 10px;
+    }
+    
+    .main-nav a {
+        font-size: 0.9em;
+    }
+
+    body {
+        padding-top: 130px; /* Increased padding-top for stacked header */
+    }
+
+    .parallax-section {
+        height: 50vh;
+    }
+
+    .content-box h1 {
+        font-size: 2em;
+    }
+
+    .price-board {
+        flex-direction: column; /* Stack price items vertically */
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .fuel-item {
+        width: 80%; /* Make items wider for better tap targets */
+        max-width: 250px;
+        margin: 0 auto;
+        height: auto;
+        padding: 20px;
+    }
+}
