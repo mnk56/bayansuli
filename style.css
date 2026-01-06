@@ -154,12 +154,23 @@ h2 {
 .content-box {
     position: absolute;
     z-index: 10;
-    /* Текстээ харагдуулахын тулд загвар нэмж болно */
     color: rgb(255, 255, 255);
-    background: rgba(0,0,0,0.3);
-    padding: 10rem;
+    background: rgba(0, 0, 0, 0.4); /* Бага зэрэг бараан болгож тодруулав */
+    
+    /* Төвд нь байрлуулах шилдэг арга */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* Padding-ийг багасгах */
+    padding: 2rem 4rem; 
     text-align: center;
-    top: 20%;
+    
+    /* Хүрээнээс халихаас сэргийлэх */
+    width: 90%;
+    max-width: 800px;
+    box-sizing: border-box;
+    border-radius: 8px; /* Буланг нь бага зэрэг бөөрөнхийлөх */
 }
 
 /* ======================================= */
@@ -310,6 +321,7 @@ footer {
     }
 
 }
+
 
 
 
