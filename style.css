@@ -23,7 +23,7 @@ body {
 
 /* Section container padding/centering */
 section {
-    padding: 60px 20px;
+    padding: 60px     20px;
     text-align: center;
 }
 
@@ -46,23 +46,19 @@ h2 {
 /* ======================================= */
 /* 1. HEADER STYLING              */
 /* ======================================= */
-
 .main-header {
-    /* Critical for fixing the header */
     position: fixed;
     top: 0;
     width: 100%;
+    height: 70px; /* Өндрийг нь бага зэрэг нэмэв */
     z-index: 1000;
-    
-    background-image: linear-gradient(to bottom, var(--primary-green), #4e8b3b);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
-    padding: 30px;
-    height: 60px; /* Ensure a consistent height */
+    padding: 0 50px; /* Хоёр талаас нь 50px зай авна */
+    background-image: linear-gradient(to bottom, var(--primary-green), #4e8b3b);
+    box-sizing: border-box;
 }
 
 .main-header .logo-container img {
@@ -77,23 +73,19 @@ h2 {
 
 .main-nav ul {
     list-style: none;
-    margin: 0px;
-    padding: 0px;
+    margin: 0; /* 1000px-ийг заавал 0 болгоно */
+    padding: 0; 
     
     display: flex;
-    justify-content: flex-end;;
-    gap: 20px; /* Reduced gap slightly */
+    justify-content: flex-end; /* Текстийг баруун талд нь байрлуулна */
+    gap: 30px; /* Хоорондын зай */
 }
 
 .main-nav a {
+    white-space: nowrap; /* Текстийг хоёр мөр болохоос сэргийлнэ */
     color: var(--text-light);
     text-decoration: none;
     font-weight: bold;
-    font-size: 1em;
-    padding: 5px 0;
-    
-    transition: color 0.3s ease;
-    white-space: nowrap;
 }
 
 .main-nav a:hover {
@@ -154,25 +146,23 @@ h2 {
 
 .content-box {
     position: absolute;
-    /* Төвд байрлуулах */
-    top: 55%; 
+  
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     
     z-index: 10;
-    color: rgb(255, 255, 255);
-    background: rgba(0, 0, 0, 0.4); /* Бага зэрэг бараан болгож тодруулав */
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.4); 
     
-    /* Padding-ийг хэт их биш, тохиромжтой болгох */
-    padding: 30px 50px; 
+    padding: 40px;
     text-align: center;
-    
-    /* Хүрээний хэмжээг хязгаарлах */
-    width: 90%;
-    max-width: 700px;
+    width: 90%; 
+    max-width: 700px; 
     box-sizing: border-box;
-    border-radius: 12px;
+    border-radius: 10px;
 }
+
 /* ======================================= */
 /* 4. PRICE SECTIONS                 */
 /* ======================================= */
