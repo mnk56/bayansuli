@@ -6,6 +6,121 @@
     <meta name="description" content="БАЯН СУЛЬ ШТС BAYAN SULI SHTS – Тээврийн хэрэгсэлд тохирох чанартай шатахуун">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- AI Чатын загвар (CSS) -->
+    <style>
+        /* Чатын ерөнхий байрлал */        
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+        }
+        /* Чатыг нээх товч */
+        .chatbot-toggle {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        .chatbot-toggle:hover {
+            background-color: #004494;
+        }
+        /* Чатын цонх */
+        .chatbot-window {
+            width: 320px;
+            height: 450px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .chatbot-window.hidden {
+            display: none;
+        }
+        /* Чатын толгой хэсэг */
+        .chatbot-header {
+            background-color: #0056b3;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        /* Мессеж гарах хэсэг */
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: #0056b3;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .ai-message {
+            background-color: #e4e6eb;
+            color: black;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        /* Оруулах хэсэг */
+        .chatbot-input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            background: white;
+        }
+        #chatbot-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        #chatbot-send {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <header class="main-header">
@@ -77,7 +192,113 @@
     <footer>
         <p>&copy; 2025 Баян Суль Штс </p>
     </footer>
-</body>
 
+    <!-- ========================================== -->
+    <!-- AI CHATBOT UI ХЭСЭГ -->
+    <!-- ========================================== -->
+    <div id="chatbot-container" class="chatbot-container">
+        <!-- Чатыг нээх товч -->
+        <button id="chatbot-toggle" class="chatbot-toggle">💬 AI Туслах</button>
+        
+        <!-- Чатын үндсэн цонх -->
+        <div id="chatbot-window" class="chatbot-window hidden">
+            <div class="chatbot-header">
+                <h3>🤖 БаянСуль AI</h3>
+                <button id="chatbot-close" class="chatbot-close">✖</button>
+            </div>
+            
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="message ai-message">Сайн байна уу? Манай ШТС-тай холбоотой асуух зүйл байвал надаас асуугаарай.</div>
+            </div>
+            
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" placeholder="Асуултаа энд бичнэ үү..." autocomplete="off"/>
+                <button id="chatbot-send">Илгээх</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI CHATBOT JAVASCRIPT ХЭСЭГ (FastAPI-тай холбогдох) -->
+    <script>
+        const toggleBtn = document.getElementById('chatbot-toggle');
+        const closeBtn = document.getElementById('chatbot-close');
+        const chatWindow = document.getElementById('chatbot-window');
+        const sendBtn = document.getElementById('chatbot-send');
+        const chatInput = document.getElementById('chatbot-input');
+        const chatMessages = document.getElementById('chatbot-messages');
+
+        // Чатын цонхыг нээх/хаах
+        toggleBtn.addEventListener('click', () => {
+            chatWindow.classList.remove('hidden');
+            toggleBtn.style.display = 'none';
+        });
+        closeBtn.addEventListener('click', () => {
+            chatWindow.classList.add('hidden');
+            toggleBtn.style.display = 'block';
+        });
+
+        // Дэлгэц рүү мессеж нэмэх функц
+        function addMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
+            msgDiv.textContent = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Хамгийн доош нь гүйлгэх
+        }
+
+        // FastAPI сервер рүү асуулт илгээх функц
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            // Хэрэглэгчийн асуултыг гаргах
+            addMessage(text, 'user');
+            chatInput.value = '';
+
+            // AI бодож байна... гэсэн мэдээлэл түр гаргах
+            const loadingId = 'loading-' + Date.now();
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = loadingId;
+            loadingDiv.classList.add('message', 'ai-message');
+            loadingDiv.textContent = 'Бодож байна... ⏳';
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                // Сервер рүү холбогдох (FastAPI)
+                const response = await fetch('http://127.0.0.1:8000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    // backend-ийнхээ хүлээж авах хувьсагчаас хамаарч question гэдгийг сольж магадгүй.
+                    body: JSON.stringify({ question: text }) 
+                });
+                
+                const data = await response.json();
+                
+                // Бодож байна гэсэн бичгийг устгах
+                document.getElementById(loadingId).remove();
+                
+                // Серверээс ирсэн хариуг гаргах (data.answer гэж ирнэ гэж тооцов)
+                const aiResponse = data.answer || data.response || "Уучлаарай, хариулт олдсонгүй.";
+                addMessage(aiResponse, 'ai');
+                
+            } catch (error) {
+                console.error(error);
+                document.getElementById(loadingId).remove();
+                addMessage("Сервертэй холбогдоход алдаа гарлаа. (FastAPI сервер асаалттай байгаа эсэхийг шалгана уу)", 'ai');
+            }
+        }
+
+        // Илгээх товч дарах үед
+        sendBtn.addEventListener('click', sendMessage);
+        
+        // Enter дарах үед
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
 </html>
 
