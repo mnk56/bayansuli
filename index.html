@@ -10,267 +10,42 @@
     
     <!-- AI Чатын ШИНЭЧЛЭГДСЭН UI/UX (CSS) -->
     <style>
-        /* Чатын ерөнхий байрлал */
-        .chatbot-container {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 1000;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        /* Чатыг нээх хөвдөг товч */
-        .chatbot-toggle {
-            background: linear-gradient(135deg, #0056b3, #007bff);
-            color: white;
-            border: none;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .chatbot-toggle:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 123, 255, 0.5);
-        }
-
-        /* Чатын цонх */
-        .chatbot-window {
-            width: 360px;
-            height: 550px;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            margin-bottom: 20px;
-            transform-origin: bottom right;
-            transition: all 0.3s ease-out;
-            opacity: 1;
-            transform: scale(1);
-        }
-        .chatbot-window.hidden {
-            opacity: 0;
-            transform: scale(0.8) translateY(20px);
-            pointer-events: none;
-        }
-
-        /* Чатын толгой */
-        .chatbot-header {
-            background: linear-gradient(135deg, #0056b3, #007bff);
-            color: white;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-        .header-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .online-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #4CAF50;
-            border-radius: 50%;
-            box-shadow: 0 0 5px #4CAF50;
-        }
-        .chatbot-header h3 {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 600;
-        }
-        .chatbot-close {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-        .chatbot-close:hover {
-            background: rgba(255,255,255,0.4);
-        }
-
-        /* Мессеж гарах хэсэг */
-        .chatbot-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            background-color: #f4f7f6;
-            scroll-behavior: smooth;
-        }
-        .chatbot-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-        .chatbot-messages::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 10px;
-        }
-
-        /* Мессежний дизайн */
-        .message {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.5;
-            word-wrap: break-word;
-            animation: fadeIn 0.3s ease-out;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .user-message {
-            background: #007bff;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        .ai-message {
-            background: #ffffff;
-            color: #333;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-            border: 1px solid #eee;
-        }
-
-        /* Typing Indicator (Бодож байна...) */
-        .typing-indicator {
-            display: none;
-            align-self: flex-start;
-            background: #ffffff;
-            padding: 12px 16px;
-            border-radius: 18px;
-            border-bottom-left-radius: 4px;
-            border: 1px solid #eee;
-            margin-top: 5px;
-        }
-        .typing-indicator span {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background-color: #90949c;
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: typing 1.4s infinite ease-in-out both;
-        }
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes typing {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-
-        /* Бэлэн товчнууд (Quick Replies) */
-        .quick-replies {
-            display: flex;
-            gap: 8px;
-            padding: 10px 20px;
-            background: #f4f7f6;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
+        .chatbot-container { position: fixed; bottom: 25px; right: 25px; z-index: 1000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .chatbot-toggle { background: linear-gradient(135deg, #0056b3, #007bff); color: white; border: none; width: 65px; height: 65px; border-radius: 50%; font-size: 28px; cursor: pointer; box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4); transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .chatbot-toggle:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 20px rgba(0, 123, 255, 0.5); }
+        .chatbot-window { width: 360px; height: 550px; background: #ffffff; border-radius: 16px; box-shadow: 0 12px 28px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; margin-bottom: 20px; transform-origin: bottom right; transition: all 0.3s ease-out; opacity: 1; transform: scale(1); }
+        .chatbot-window.hidden { opacity: 0; transform: scale(0.8) translateY(20px); pointer-events: none; }
+        .chatbot-header { background: linear-gradient(135deg, #0056b3, #007bff); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .header-info { display: flex; align-items: center; gap: 10px; }
+        .online-dot { width: 10px; height: 10px; background-color: #4CAF50; border-radius: 50%; box-shadow: 0 0 5px #4CAF50; }
+        .chatbot-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
+        .chatbot-close { background: rgba(255,255,255,0.2); border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .chatbot-close:hover { background: rgba(255,255,255,0.4); }
+        .chatbot-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background-color: #f4f7f6; scroll-behavior: smooth; }
+        .chatbot-messages::-webkit-scrollbar { width: 6px; }
+        .chatbot-messages::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .message { max-width: 80%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; word-wrap: break-word; animation: fadeIn 0.3s ease-out; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .user-message { background: #007bff; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .ai-message { background: #ffffff; color: #333; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #eee; }
+        .typing-indicator { display: none; align-self: flex-start; background: #ffffff; padding: 12px 16px; border-radius: 18px; border-bottom-left-radius: 4px; border: 1px solid #eee; margin-top: 5px; }
+        .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #90949c; border-radius: 50%; margin: 0 2px; animation: typing 1.4s infinite ease-in-out both; }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; } .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        .quick-replies { display: flex; gap: 8px; padding: 10px 20px; background: #f4f7f6; overflow-x: auto; white-space: nowrap; }
         .quick-replies::-webkit-scrollbar { display: none; }
-        .reply-btn {
-            background: white;
-            border: 1px solid #007bff;
-            color: #007bff;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .reply-btn:hover {
-            background: #007bff;
-            color: white;
-        }
-
-        /* Оруулах хэсэг */
-        .chatbot-input-area {
-            display: flex;
-            padding: 15px;
-            background: white;
-            border-top: 1px solid #eee;
-            align-items: center;
-        }
-        #chatbot-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            outline: none;
-            font-size: 14px;
-            transition: border 0.3s;
-            background: #f9f9f9;
-        }
-        #chatbot-input:focus {
-            border-color: #007bff;
-            background: white;
-        }
-        #chatbot-send {
-            background: none;
-            color: #007bff;
-            border: none;
-            padding: 10px;
-            margin-left: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-        #chatbot-send svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-        #chatbot-send:hover {
-            color: #0056b3;
-            transform: scale(1.1);
-        }
-
-        /* Утасны дэлгэцний тохиргоо */
-        @media (max-width: 480px) {
-            .chatbot-window {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                border-radius: 0;
-            }
-            .chatbot-container {
-                bottom: 15px;
-                right: 15px;
-            }
-        }
+        .reply-btn { background: white; border: 1px solid #007bff; color: #007bff; padding: 6px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: 0.2s; }
+        .reply-btn:hover { background: #007bff; color: white; }
+        .chatbot-input-area { display: flex; padding: 15px; background: white; border-top: 1px solid #eee; align-items: center; }
+        #chatbot-input { flex: 1; padding: 12px 15px; border: 1px solid #ddd; border-radius: 25px; outline: none; font-size: 14px; transition: border 0.3s; background: #f9f9f9; }
+        #chatbot-input:focus { border-color: #007bff; background: white; }
+        #chatbot-send { background: none; color: #007bff; border: none; padding: 10px; margin-left: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        #chatbot-send svg { width: 24px; height: 24px; fill: currentColor; }
+        #chatbot-send:hover { color: #0056b3; transform: scale(1.1); }
+        @media (max-width: 480px) { .chatbot-window { position: fixed; top: 0; left: 0; width: 100%; height: 100%; margin: 0; border-radius: 0; } .chatbot-container { bottom: 15px; right: 15px; } }
     </style>
 </head>
 <body>
-    <!-- ҮНДСЭН ВЭБИЙН ХЭСЭГ (Өөрчлөгдөөгүй) -->
     <header class="main-header">
         <div class="logo-container">
             <a href="#">
@@ -290,8 +65,7 @@
         <div class="parallax-section">
              <div class="moving-layer layer-1"></div>
              <div class="moving-layer layer-2"></div> 
-             
-              <div class="content-box"> 
+             <div class="content-box"> 
                 <h1>Баян Суль ШТС</h1>
                 <p>Манай компани нь олон улсын стандартыг үйл ажиллагаандаа алхам алхмаар хэрэгжүүлж байна.</p>
             </div>
@@ -312,15 +86,14 @@
                        <h3>Бензин 92</h3>
                        <p>2,400<span class="currency">₮</span></p>
                    </div>
-               <div class="fuel-item fuel-euro">
-                   <h3>Евро 92</h3>
-                   <p>2,550<span class="currency">₮</span></p>
-               </div>
-
-                <div class="fuel-item fuel-diesel">
-                  <h3>Дизель</h3>
-                <p>2,900<span class="currency">₮</span></p>
-                  </div>
+                   <div class="fuel-item fuel-euro">
+                       <h3>Евро 92</h3>
+                       <p>2,550<span class="currency">₮</span></p>
+                   </div>
+                   <div class="fuel-item fuel-diesel">
+                       <h3>Дизель</h3>
+                       <p>2,900<span class="currency">₮</span></p>
+                   </div>
                 </div>
             </div>
         </section>
@@ -338,15 +111,11 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Баян Суль Штс </p>
+        <p>&copy; 2025 Баян Суль Штс</p>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- AI CHATBOT UI ХЭСЭГ (ШИНЭЧИЛСЭН) -->
-    <!-- ========================================== -->
+    <!-- AI CHATBOT UI ХЭСЭГ -->
     <div id="chatbot-container" class="chatbot-container">
-        
-        <!-- Чатын үндсэн цонх -->
         <div id="chatbot-window" class="chatbot-window hidden">
             <div class="chatbot-header">
                 <div class="header-info">
@@ -360,12 +129,10 @@
                 <div class="message ai-message">Сайн байна уу? 👋<br>Баян Суль ШТС-тай холбоотой асуух зүйлээ эсвэл ажилд орох хүсэлтээ энд бичнэ үү.</div>
             </div>
 
-            <!-- Typing Indicator (Бодож байна анимейшн) -->
             <div id="typing-indicator" class="typing-indicator">
                 <span></span><span></span><span></span>
             </div>
 
-            <!-- Бэлэн асуултууд -->
             <div class="quick-replies">
                 <button class="reply-btn" onclick="sendQuickReply('АИ-92 бензин ямар үнэтэй вэ?')">Үнэ харах</button>
                 <button class="reply-btn" onclick="sendQuickReply('Танайх хаана байрладаг вэ?')">Байршил</button>
@@ -380,11 +147,10 @@
             </div>
         </div>
 
-        <!-- Чатыг нээх товч (Дүрсээр) -->
         <button id="chatbot-toggle" class="chatbot-toggle">💬</button>
     </div>
 
-    <!-- AI CHATBOT JAVASCRIPT ХЭСЭГ -->
+    <!-- AI CHATBOT JAVASCRIPT -->
     <script>
         const toggleBtn = document.getElementById('chatbot-toggle');
         const closeBtn = document.getElementById('chatbot-close');
@@ -394,7 +160,6 @@
         const chatMessages = document.getElementById('chatbot-messages');
         const typingIndicator = document.getElementById('typing-indicator');
 
-        // Чатын цонхыг нээх/хаах
         toggleBtn.addEventListener('click', () => {
             chatWindow.classList.remove('hidden');
             toggleBtn.style.display = 'none';
@@ -404,15 +169,11 @@
             setTimeout(() => { toggleBtn.style.display = 'flex'; }, 300);
         });
 
-        // Дэлгэц рүү мессеж нэмэх
         function addMessage(text, sender) {
             const msgDiv = document.createElement('div');
             msgDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
-            
-            // Хэрвээ текст дотор **үг** байвал bold болгох
             const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             msgDiv.innerHTML = formattedText;
-            
             chatMessages.appendChild(msgDiv);
             scrollToBottom();
         }
@@ -421,13 +182,11 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        // Бэлэн товч (Quick reply) дарах үед
         function sendQuickReply(text) {
             chatInput.value = text;
             sendMessage();
         }
 
-        // FastAPI сервер рүү илгээх функц
         async function sendMessage() {
             const text = chatInput.value.trim();
             if (!text) return;
@@ -435,12 +194,12 @@
             addMessage(text, 'user');
             chatInput.value = '';
 
-            // Typing animation харуулах
             typingIndicator.style.display = 'block';
             chatMessages.appendChild(typingIndicator);
             scrollToBottom();
 
             try {
+                // Серверийн хаяг (FastAPI)
                 const response = await fetch('http://127.0.0.1:8000/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -448,7 +207,6 @@
                 });
                 
                 const data = await response.json();
-                
                 typingIndicator.style.display = 'none';
                 
                 const aiResponse = data.answer || data.response || "Уучлаарай, хариулт олдсонгүй.";
@@ -457,7 +215,7 @@
             } catch (error) {
                 console.error(error);
                 typingIndicator.style.display = 'none';
-                addMessage("Сервертэй холбогдож чадсангүй. Таны сервер асаалттай байна уу?", 'ai');
+                addMessage("Сервертэй холбогдож чадсангүй. FastAPI сервер асаалттай байна уу?", 'ai');
             }
         }
 
